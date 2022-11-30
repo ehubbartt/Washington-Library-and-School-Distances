@@ -29,7 +29,7 @@ The applied libraries in used for this web GIS application is Mapbox GL JS, Mapb
 ### *Acknowledgment:*
 - Bo Zhao: provided eseential concepts needed to build web GIS application
 - Steven Bao: helped debugging erros both technically and documentally
-- [Washington Geospatial Open Data Portal](https://geo.wa.gov/): provided crediblt,transparent datasets
+- [Washington Geospatial Open Data Portal](https://geo.wa.gov/): provided credible, transparent datasets
 - [Mapbox](https://docs.mapbox.com/): provided a template as a reference
 
 ### *Extra information:*
