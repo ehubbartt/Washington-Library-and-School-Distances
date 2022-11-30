@@ -14,9 +14,9 @@ This map allows users to be able to locate all the public schools and public lib
 ### *Screenshots:*
 
 ### *Main functions:*
-> Build listings function  - buildLocationList(): Build a list for each school and libraryto the side bar. It iterates through the libraries and shcools location and add each one to the sidebar listing dynamically. The listings will populate the sidebar on the left side of the page.
+> **Build listings function  - buildLocationList():** Build a list for each school and libraryto the side bar. It iterates through the libraries and shcools location and add each one to the sidebar listing dynamically. The listings will populate the sidebar on the left side of the page.
 >
-> Interactivity functions - flyTo() & createPopup(): flyTo() center the map on the correct location and zoom in while createPopup() display a popup at that same location.
+> **Interactivity functions - flyTo() & createPopup():** flyTo() center the map on the correct location and zoom in while createPopup() display a popup at that same location.
 
 ### *Data sources:*
 The datasets come from [Washington Geospatial Open Data Portal](https://geo.wa.gov/), where it provides efficient, effecive, and transparent dataset.
