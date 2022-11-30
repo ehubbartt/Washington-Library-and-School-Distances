@@ -1,9 +1,9 @@
 # Final-Project: Schools and Libraries in Washington GIS Application
 
-### Project title (3pts)
-#### Visualizing public schools and public libraries in Washington State by County level
-### Project description (9pts)
-####
+### *Project title:*
+Visualizing public schools and public libraries in Washington State by County level
+### *Project description:*
+
 ### Project goal (such as, what is the message you want to deliver through your project?) (9pts)
 ### The application URL (not the repository url) (2pts)
 ### Screenshots (2pts)
