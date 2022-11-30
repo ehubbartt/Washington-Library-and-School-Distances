@@ -1,7 +1,9 @@
-# Final-Project
+# Final-Project: Schools and Libraries in Washington GIS Application
 
 ### Project title (3pts)
+#### Visualizing public schools and public libraries in Washington State by County level
 ### Project description (9pts)
+####
 ### Project goal (such as, what is the message you want to deliver through your project?) (9pts)
 ### The application URL (not the repository url) (2pts)
 ### Screenshots (2pts)
@@ -11,5 +13,5 @@
 ### Acknowledgment (2pts)
 ### Other things that are necessary to inform the audience.
 
-#### This description must be no less than 800 words. In the repository, please describe the web map. 
+#### This description must be no less than 800 words. In the repository, please describe the web map.
 #### Your readme.md file should be well-formatted and free of grammatical errors (3pts)
