@@ -1,5 +1,5 @@
 # Final-Project
-## This description must be no less than 800 words. In the repository, please describe the web map. Your readme.md file should be well-formatted and free of grammatical errors (3pts)
+#### This description must be no less than 800 words. In the repository, please describe the web map. Your readme.md file should be well-formatted and free of grammatical errors (3pts)
 ### Project title (3pts)
 ### Project description (9pts)
 ### Project goal (such as, what is the message you want to deliver through your project?) (9pts)
