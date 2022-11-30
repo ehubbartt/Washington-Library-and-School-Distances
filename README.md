@@ -8,8 +8,8 @@
 ### Main functions (5pts)
 ### Data sources (3pts)
 ### Applied libraries (e.g., mapbox gl js) and Web Services (e.g., github, basemap) in use (2pts)
-### Acknowledgment (2PNTS)
+### Acknowledgment (2pts)
 ### Other things that are necessary to inform the audience.
 
-This description must be no less than 800 words. In the repository, please describe the web map. 
-Your readme.md file should be well-formatted and free of grammatical errors (3pts)
+#### This description must be no less than 800 words. In the repository, please describe the web map. 
+#### Your readme.md file should be well-formatted and free of grammatical errors (3pts)
