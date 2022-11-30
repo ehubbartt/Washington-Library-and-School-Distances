@@ -1,5 +1,5 @@
 # Final-Project
-## Project title (3pts)
+### Project title (3pts)
 # Project description (9pts)
 # Project goal (such as, what is the message you want to deliver through your project?) (9pts)
 # The application URL (not the repository url) (2pts)
