@@ -11,5 +11,5 @@
 ### Acknowledgment (2PNTS)
 ### Other things that are necessary to inform the audience.
 
-#### This description must be no less than 800 words. In the repository, please describe the web map. 
+This description must be no less than 800 words. In the repository, please describe the web map. 
 Your readme.md file should be well-formatted and free of grammatical errors (3pts)
