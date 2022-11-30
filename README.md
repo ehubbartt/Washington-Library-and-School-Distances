@@ -1,4 +1,5 @@
-# Final-Project: Schools and Libraries in Washington GIS Application
+# Final-Project:
+## Schools and Libraries in Washington GIS Application
 
 ### *Project title:*
 Visualizing public schools and public libraries in Washington State by County level
@@ -34,4 +35,4 @@ The applied libraries in used for this web GIS application is Mapbox GL JS, Mapb
 ### *Extra information:*
 We used [Build a store locator](https://docs.mapbox.com/help/tutorials/building-a-store-locator/#finished-product) as a reference. The series of tutorials teach you how to create a store locator using Mapbox GL JS then sort the sotres by their distance from a given location using the Mapbox GL Geocoder plugin and TUrf.js. Basically it has two big parts: 1. Build a store locator 2. Sort stores by distance
 
-#### This description must be no less than 800 words. In the repository, please describe the web map.Your readme.md file should be well-formatted and free of grammatical errors (3pts)
+##### This description must be no less than 800 words. In the repository, please describe the web map.Your readme.md file should be well-formatted and free of grammatical errors (3pts)
