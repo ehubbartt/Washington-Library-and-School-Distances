@@ -26,10 +26,10 @@ The datasets originally contain 2,552 records of public schools and 643 records 
 The applied libraries in used for this web GIS application is Mapbox GL JS, Mapbox Studio, and Mapbox Street Style for a base map and thematic map layers.Web service used to publish our project publicly is through Github.
 
 ### *Acknowledgment:*
--Bo Zhao: provided eseential concepts needed to build web GIS application
--Steven Bao: helped debugging erros both technically and documentally
--[Washington Geospatial Open Data Portal](https://geo.wa.gov/): provided cleaned, credible datasets
--[Mapbox](https://docs.mapbox.com/): provided a template as a reference
+- Bo Zhao: provided eseential concepts needed to build web GIS application
+- Steven Bao: helped debugging erros both technically and documentally
+- [Washington Geospatial Open Data Portal](https://geo.wa.gov/): provided cleaned, credible datasets
+- [Mapbox](https://docs.mapbox.com/): provided a template as a reference
 
 ### *Extra information:*
 We used [Build a store locator](https://docs.mapbox.com/help/tutorials/building-a-store-locator/#finished-product) as a reference. The series of tutorials teach you how to create a store locator using Mapbox GL JS then sort the sotres by their distance from a given location using the Mapbox GL Geocoder plugin and TUrf.js. Basically it has two big parts: 1. Build a store locator 2. Sort stores by distance
