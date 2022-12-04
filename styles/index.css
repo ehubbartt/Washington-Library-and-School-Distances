@@ -1,5 +1,8 @@
 :root {
   --sidebar-width: 300px;
+  --schools-color: #8377d1;
+  --libraries-color: #94bfa7;
+  --dark-color: #2f2f2f;
 }
 
 * {
@@ -38,4 +41,40 @@ html {
   height: 100%;
   padding: 20px;
   width: var(--sidebar-width);
+  display: flex;
+  flex-direction: column;
+}
+
+.btn {
+  cursor: pointer;
+}
+
+.sidebar-btn {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.sidebar-btn:hover {
+  background-color: #eee;
+}
+
+#school_data.active {
+  background-color: var(--schools-color);
+  color: #fff;
+}
+#library_data.active {
+  background-color: var(--libraries-color);
+  color: #fff;
+}
+#county_data.active {
+  background-color: var(--dark-color);
+  color: #fff;
+}
+
+.divider {
+  border-bottom: 1px solid #ccc;
+  margin: 20px 0;
 }
