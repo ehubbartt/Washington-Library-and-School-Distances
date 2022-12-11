@@ -133,14 +133,6 @@ window.addEventListener("load", () => {
     });
   };
 
-  const toggleButtons = document.querySelectorAll(".toggle-btn");
-  for (const button of toggleButtons) {
-    button.addEventListener("click", (e) => {
-      toggleLayer(e.target.id);
-      button.classList.toggle("active");
-    });
-  }
-
   const toggleLayer = (layer) => {
     const visibility = map.getLayoutProperty(layer, "visibility");
 
@@ -151,22 +143,11 @@ window.addEventListener("load", () => {
     }
   };
 
-  const selectors = document.querySelectorAll(".selector");
-  for (const selector of selectors) {
-    selector.addEventListener("click", (e) => {
-      if (selector.classList.contains("active")) return;
-      selectors[0].classList.toggle("active");
-      selectors[1].classList.toggle("active");
+  const toggleButtons = document.querySelectorAll('input[type="checkbox"]');
 
-      const libraryDataContainer = document.getElementById(
-        "library_data_container"
-      );
-      const schoolDataContainer = document.getElementById(
-        "school_data_container"
-      );
-
-      libraryDataContainer.classList.toggle("hidden");
-      schoolDataContainer.classList.toggle("hidden");
+  for (const toggleButton of toggleButtons) {
+    toggleButton.addEventListener("click", (event) => {
+      toggleLayer(toggleButton.parentElement.id);
     });
   }
 

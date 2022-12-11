@@ -56,21 +56,24 @@ html {
   border-radius: 5px;
   padding: 10px;
   margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .sidebar-btn:hover {
   background-color: #eee;
 }
 
-#school_data.active {
+#school_data {
   background-color: var(--schools-color);
   color: #fff;
 }
-#library_data.active {
+#library_data {
   background-color: var(--libraries-color);
   color: #fff;
 }
-#county_data.active {
+#county_data {
   background-color: var(--dark-color);
   color: #fff;
 }
@@ -134,4 +137,41 @@ html {
 
 .hidden {
   display: none;
+}
+
+.toggle-button {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+  background-color: #ccc;
+  border-radius: 34px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.toggle-button__handle {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 30px;
+  height: 30px;
+  background-color: #fff;
+  border-radius: 30px;
+  transition: all 0.3s ease;
+  border: 2px solid #666;
+}
+
+input[type="checkbox"]:checked + .toggle-button .toggle-button__handle {
+  left: calc(100% - 30px - 2px);
+  width: 30px;
+  border: 2px solid #666;
+}
+
+input[type="checkbox"]:checked + .toggle-button {
+  background-color: #666;
+}
+
+input[type="checkbox"] {
+  opacity: 0;
 }
