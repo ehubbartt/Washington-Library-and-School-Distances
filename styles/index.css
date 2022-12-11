@@ -77,7 +77,6 @@ html {
 
 .divider {
   border-bottom: 1px solid #ccc;
-  margin: 20px 0;
 }
 
 .selectors {
@@ -87,6 +86,8 @@ html {
   overflow: hidden;
   width: 100%;
   flex-shrink: 0;
+  margin: 0.5rem 0;
+  min-height: 3.25rem;
 }
 
 .selector {
