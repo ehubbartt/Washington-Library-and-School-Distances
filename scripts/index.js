@@ -9,8 +9,8 @@ window.addEventListener("load", () => {
     center: [-120.7, 47.5], // starting center
   });
 
-  const layers = ["school_data", "library_data", "county_data"];
-  const DOT_SIZE = 3;
+  const layers = ["library_data", "school_data", "county_data"];
+  const DOT_SIZE = 3.5;
 
   const geoJsonFetch = async () => {
     const libraryResponse = await fetch(
@@ -43,7 +43,7 @@ window.addEventListener("load", () => {
         `;
 
       dataItem.addEventListener("click", () => {
-        console.log("here");
+        selectNewFeature(feature);
         map.flyTo({
           center: feature.geometry.coordinates,
           zoom: 15,
@@ -67,7 +67,7 @@ window.addEventListener("load", () => {
         `;
 
       dataItem.addEventListener("click", () => {
-        console.log("here");
+        selectNewFeature(feature);
         map.flyTo({
           center: feature.geometry.coordinates,
           zoom: 15,
@@ -131,6 +131,67 @@ window.addEventListener("load", () => {
         },
       });
     });
+
+    map.on("click", layers[0], (e) => {
+      const coordinates = e.features[0].geometry.coordinates.slice();
+      const description = e.features[0].properties.Library;
+
+      selectNewFeature(e.features[0]);
+
+      while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+      }
+
+      new mapboxgl.Popup()
+        .setLngLat(coordinates)
+        .setHTML(description)
+        .addTo(map);
+    });
+
+    map.on("click", layers[1], (e) => {
+      const coordinates = e.features[0].geometry.coordinates.slice();
+      const description = e.features[0].properties.SchoolName;
+
+      selectNewFeature(e.features[0]);
+
+      while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+      }
+
+      new mapboxgl.Popup()
+        .setLngLat(coordinates)
+        .setHTML(description)
+        .addTo(map);
+    });
+  };
+
+  const selectNewFeature = (feature) => {
+    const featureType = feature.properties.Library ? "library" : "school";
+    const selectedFeatureContainer = document.querySelector(
+      ".selected-feature-container"
+    );
+    const featureItem = document.createElement("div");
+    featureItem.classList.add("feature-item");
+    const selectedFeatureTitle = document.querySelector(
+      ".selected-feature-title"
+    );
+    selectedFeatureTitle.innerHTML = "Selected Feature";
+    if (featureType === "library") {
+      featureItem.innerHTML = `
+        <div class="feature-item__title">${feature.properties.Library}</div>
+        <div class="feature-item__address">${feature.properties.LDLI_Address1}</div>
+        `;
+    } else {
+      featureItem.innerHTML = `
+        <div class="feature-item__title">${feature.properties.SchoolName}</div>
+        <div class="feature-item__address">${feature.properties.PhysicalAddress}</div>
+        `;
+    }
+    const selectedFeatureItems = document.querySelectorAll(".feature-item");
+    for (const selectedFeatureItem of selectedFeatureItems) {
+      selectedFeatureItem.remove();
+    }
+    selectedFeatureContainer.appendChild(featureItem);
   };
 
   const toggleLayer = (layer) => {
@@ -148,6 +209,25 @@ window.addEventListener("load", () => {
   for (const toggleButton of toggleButtons) {
     toggleButton.addEventListener("click", (event) => {
       toggleLayer(toggleButton.parentElement.id);
+    });
+  }
+
+  const selectors = document.querySelectorAll(".selector");
+  for (const selector of selectors) {
+    selector.addEventListener("click", (e) => {
+      if (selector.classList.contains("active")) return;
+      selectors[0].classList.toggle("active");
+      selectors[1].classList.toggle("active");
+
+      const libraryDataContainer = document.getElementById(
+        "library_data_container"
+      );
+      const schoolDataContainer = document.getElementById(
+        "school_data_container"
+      );
+
+      libraryDataContainer.classList.toggle("hidden");
+      schoolDataContainer.classList.toggle("hidden");
     });
   }
 
