@@ -28,6 +28,54 @@ window.addEventListener("load", () => {
     );
     const countyData = await countyResponse.json();
 
+    const libraryDataContainer = document.getElementById(
+      "library_data_container"
+    );
+    const libraryFeatures = libraryData.features;
+    for (const feature of libraryFeatures) {
+      let dataItem = document.createElement("div");
+      dataItem.classList.add("data-item");
+      dataItem.classList.add("btn");
+
+      dataItem.innerHTML = `
+        <div class="data-item__title">${feature.properties.Library}</div>
+        <div class="data-item__address">${feature.properties.LDLI_Address1}</div>
+        `;
+
+      dataItem.addEventListener("click", () => {
+        console.log("here");
+        map.flyTo({
+          center: feature.geometry.coordinates,
+          zoom: 15,
+        });
+      });
+      libraryDataContainer.appendChild(dataItem);
+    }
+
+    const schoolDataContainer = document.getElementById(
+      "school_data_container"
+    );
+    const schoolFeatures = schoolData.features;
+    for (const feature of schoolFeatures) {
+      let dataItem = document.createElement("div");
+      dataItem.classList.add("data-item");
+      dataItem.classList.add("btn");
+
+      dataItem.innerHTML = `
+        <div class="data-item__title">${feature.properties.SchoolName}</div>
+        <div class="data-item__address">${feature.properties.PhysicalAddress}</div>
+        `;
+
+      dataItem.addEventListener("click", () => {
+        console.log("here");
+        map.flyTo({
+          center: feature.geometry.coordinates,
+          zoom: 15,
+        });
+      });
+      schoolDataContainer.appendChild(dataItem);
+    }
+
     map.on("load", () => {
       map.addSource(layers[0], {
         type: "geojson",
@@ -102,6 +150,25 @@ window.addEventListener("load", () => {
       map.setLayoutProperty(layer, "visibility", "visible");
     }
   };
+
+  const selectors = document.querySelectorAll(".selector");
+  for (const selector of selectors) {
+    selector.addEventListener("click", (e) => {
+      if (selector.classList.contains("active")) return;
+      selectors[0].classList.toggle("active");
+      selectors[1].classList.toggle("active");
+
+      const libraryDataContainer = document.getElementById(
+        "library_data_container"
+      );
+      const schoolDataContainer = document.getElementById(
+        "school_data_container"
+      );
+
+      libraryDataContainer.classList.toggle("hidden");
+      schoolDataContainer.classList.toggle("hidden");
+    });
+  }
 
   geoJsonFetch();
 });

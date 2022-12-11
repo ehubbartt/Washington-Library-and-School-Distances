@@ -12,7 +12,7 @@
 body,
 html {
   font-family: "Poppins";
-  font-size: 22px;
+  font-size: 14px;
 
   margin: 0;
   padding: 0;
@@ -39,6 +39,7 @@ html {
 .sidebar {
   background-color: #fff;
   height: 100%;
+  max-height: 100vh;
   padding: 20px;
   width: var(--sidebar-width);
   display: flex;
@@ -77,4 +78,59 @@ html {
 .divider {
   border-bottom: 1px solid #ccc;
   margin: 20px 0;
+}
+
+.selectors {
+  display: inline-flex;
+  border: 1px solid black;
+  border-radius: 4px;
+  overflow: hidden;
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.selector {
+  cursor: pointer;
+  padding: 10px 16px;
+  width: 100%;
+  display: grid;
+  place-items: center;
+}
+
+.selector:not(:last-child) {
+  border-right: 1px solid black;
+}
+
+.selector.active {
+  background-color: var(--dark-color);
+  color: #fff;
+}
+
+.data-container {
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
+}
+
+.data-item {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  border-radius: 5px;
+  margin: 0.5rem 0;
+  padding: 0.25rem;
+}
+
+.data-item:hover {
+  background-color: #eee;
+}
+
+.data-item__title {
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+}
+
+.hidden {
+  display: none;
 }
