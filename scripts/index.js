@@ -64,7 +64,7 @@ window.addEventListener("load", () => {
           selectNewFeature(feature);
           map.flyTo({
             center: feature.geometry.coordinates,
-            zoom: 15,
+            zoom: 10,
           });
         });
         schoolDataContainer.appendChild(dataItem);
