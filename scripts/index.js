@@ -28,54 +28,131 @@ window.addEventListener("load", () => {
     );
     const countyData = await countyResponse.json();
 
-    const libraryDataContainer = document.getElementById(
-      "library_data_container"
-    );
-    const libraryFeatures = libraryData.features;
-    for (const feature of libraryFeatures) {
-      let dataItem = document.createElement("div");
-      dataItem.classList.add("data-item");
-      dataItem.classList.add("btn");
+    const updateDataList = (data, type) => {
+      const id =
+        type === "library" ? "library_data_container" : "school_data_container";
+      const schoolDataContainer = document.getElementById(id);
+      const features = data.features;
+      for (const feature of features) {
+        let dataItem = document.createElement("div");
+        dataItem.classList.add("data-item");
+        dataItem.classList.add("btn");
 
-      dataItem.innerHTML = `
-        <div class="data-item__title">${feature.properties.Library}</div>
-        <div class="data-item__address">${feature.properties.LDLI_Address1}</div>
+        let dataTitle = "";
+        let dataAddress = "";
+
+        if (type === "library") {
+          dataTitle = feature.properties.Library;
+          dataAddress = feature.properties.LDLI_Address1;
+        } else {
+          dataTitle = feature.properties.SchoolName;
+          dataAddress = feature.properties.PhysicalAddress;
+        }
+
+        dataItem.innerHTML = `
+        <div class="data-item__title">${dataTitle}</div>
+        <div class="data-item__address">${dataAddress}</div>
         `;
 
-      dataItem.addEventListener("click", () => {
-        selectNewFeature(feature, schoolData, libraryData);
-        map.flyTo({
-          center: feature.geometry.coordinates,
-          zoom: 10,
+        dataItem.addEventListener("click", () => {
+          selectNewFeature(feature);
+          map.flyTo({
+            center: feature.geometry.coordinates,
+            zoom: 15,
+          });
         });
-      });
-      libraryDataContainer.appendChild(dataItem);
-    }
+        schoolDataContainer.appendChild(dataItem);
+      }
+    };
 
-    const schoolDataContainer = document.getElementById(
-      "school_data_container"
-    );
-    const schoolFeatures = schoolData.features;
-    for (const feature of schoolFeatures) {
-      let dataItem = document.createElement("div");
-      dataItem.classList.add("data-item");
-      dataItem.classList.add("btn");
+    const selectNewFeature = (feature) => {
+      const featureType = feature.properties.Library ? "library" : "school";
+      const selectedFeatureContainer = document.querySelector(
+        ".selected-feature-container"
+      );
+      const featureItem = document.createElement("div");
+      featureItem.classList.add("feature-item");
 
-      dataItem.innerHTML = `
-        <div class="data-item__title">${feature.properties.SchoolName}</div>
-        <div class="data-item__address">${feature.properties.PhysicalAddress}</div>
+      const selectedFeatureTitle = document.querySelector(
+        ".selected-feature-title"
+      );
+      selectedFeatureTitle.innerHTML = "Selected Feature";
+
+      if (featureType === "library") {
+        featureItem.innerHTML = `
+        <div class="feature-item__title">${feature.properties.Library}</div>
+        <div class="feature-item__address">${feature.properties.LDLI_Address1}</div>
         `;
+      } else {
+        featureItem.innerHTML = `
+        <div class="feature-item__title">${feature.properties.SchoolName}</div>
+        <div class="feature-item__address">${feature.properties.PhysicalAddress}</div>
+        `;
+      }
 
-      dataItem.addEventListener("click", () => {
-        console.log(libraryData);
-        selectNewFeature(feature, schoolData, libraryData);
-        map.flyTo({
-          center: feature.geometry.coordinates,
-          zoom: 15,
-        });
+      //remove previous source and layer
+      if (map.getSource("circle")) {
+        map.removeLayer("circle");
+        map.removeSource("circle");
+      }
+
+      //use turf to create a 50 mile circle
+      var options = {
+        steps: 100,
+        units: "miles",
+      };
+      let circle = turf.circle(feature.geometry.coordinates, 10, options);
+      //find how many features are within the turf circle
+      let libraryCount = turf.within(libraryData, circle);
+      let schoolCount = turf.within(schoolData, circle);
+      //add the circle to the map
+      map.addSource("circle", {
+        type: "geojson",
+        data: circle,
       });
-      schoolDataContainer.appendChild(dataItem);
-    }
+
+      map.addLayer({
+        id: "circle",
+        type: "fill",
+        source: "circle",
+        layout: {
+          visibility: "visible",
+        },
+        paint: {
+          "fill-color": "#2F2F2F",
+          "fill-opacity": 0.1,
+        },
+      });
+
+      const selectedFeatureItems = document.querySelectorAll(".feature-item");
+      for (const selectedFeatureItem of selectedFeatureItems) {
+        selectedFeatureItem.remove();
+      }
+      selectedFeatureContainer.appendChild(featureItem);
+    };
+
+    updateDataList(libraryData, "library");
+    updateDataList(schoolData, "school");
+    // const libraryFeatures = libraryData.features;
+    // for (const feature of libraryFeatures) {
+    //   let dataItem = document.createElement("div");
+    //   dataItem.classList.add("data-item");
+    //   dataItem.classList.add("btn");
+
+    //   dataItem.innerHTML = `
+    //     <div class="data-item__title">${feature.properties.Library}</div>
+    //     <div class="data-item__address">${feature.properties.LDLI_Address1}</div>
+    //     `;
+
+    //   dataItem.addEventListener("click", () => {
+    //     selectNewFeature(feature);
+    //     map.flyTo({
+    //       center: feature.geometry.coordinates,
+    //       zoom: 10,
+    //     });
+    //   });
+    //   libraryDataContainer.appendChild(dataItem);
+    // }
 
     map.on("load", () => {
       map.addSource(layers[0], {
@@ -137,7 +214,7 @@ window.addEventListener("load", () => {
       const coordinates = e.features[0].geometry.coordinates.slice();
       const description = e.features[0].properties.Library;
 
-      selectNewFeature(e.features[0], schoolData, libraryData);
+      selectNewFeature(e.features[0]);
 
       while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
         coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
@@ -148,78 +225,12 @@ window.addEventListener("load", () => {
       const coordinates = e.features[0].geometry.coordinates.slice();
       const description = e.features[0].properties.SchoolName;
 
-      selectNewFeature(e.features[0], schoolData, libraryData);
+      selectNewFeature(e.features[0]);
 
       while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
         coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
       }
     });
-  };
-
-  const selectNewFeature = (feature, schoolData, libraryData) => {
-    const featureType = feature.properties.Library ? "library" : "school";
-    const selectedFeatureContainer = document.querySelector(
-      ".selected-feature-container"
-    );
-    const featureItem = document.createElement("div");
-    featureItem.classList.add("feature-item");
-
-    const selectedFeatureTitle = document.querySelector(
-      ".selected-feature-title"
-    );
-    selectedFeatureTitle.innerHTML = "Selected Feature";
-
-    if (featureType === "library") {
-      featureItem.innerHTML = `
-        <div class="feature-item__title">${feature.properties.Library}</div>
-        <div class="feature-item__address">${feature.properties.LDLI_Address1}</div>
-        `;
-    } else {
-      featureItem.innerHTML = `
-        <div class="feature-item__title">${feature.properties.SchoolName}</div>
-        <div class="feature-item__address">${feature.properties.PhysicalAddress}</div>
-        `;
-    }
-
-    //remove previous source and layer
-    if (map.getSource("circle")) {
-      map.removeLayer("circle");
-      map.removeSource("circle");
-    }
-
-    //use turf to create a 50 mile circle
-    var options = {
-      steps: 100,
-      units: "miles",
-    };
-    let circle = turf.circle(feature.geometry.coordinates, 10, options);
-    //find how many features are within the turf circle
-    let libraryCount = turf.within(libraryData, circle);
-    let schoolCount = turf.within(schoolData, circle);
-    //add the circle to the map
-    map.addSource("circle", {
-      type: "geojson",
-      data: circle,
-    });
-
-    map.addLayer({
-      id: "circle",
-      type: "fill",
-      source: "circle",
-      layout: {
-        visibility: "visible",
-      },
-      paint: {
-        "fill-color": "#2F2F2F",
-        "fill-opacity": 0.1,
-      },
-    });
-
-    const selectedFeatureItems = document.querySelectorAll(".feature-item");
-    for (const selectedFeatureItem of selectedFeatureItems) {
-      selectedFeatureItem.remove();
-    }
-    selectedFeatureContainer.appendChild(featureItem);
   };
 
   const toggleLayer = (layer) => {
