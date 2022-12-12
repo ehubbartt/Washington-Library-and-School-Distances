@@ -139,15 +139,13 @@ window.addEventListener("load", () => {
         );
       }
 
-      //filter library conut by distace
-      // libraryCount = libraryCount.features.filter(
-      //   (library) => library.properties.distance <= 10
-      // );
+      libraryCount.features.sort(
+        (a, b) => a.properties.distance - b.properties.distance
+      );
 
-      //filter school count by distance
-      // schoolCount = schoolCount.features.filter(
-      //   (school) => school.properties.distance <= 10
-      // );
+      schoolCount.features.sort(
+        (a, b) => a.properties.distance - b.properties.distance
+      );
 
       updateDataList(libraryCount, "library");
       updateDataList(schoolCount, "school");
