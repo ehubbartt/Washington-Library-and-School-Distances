@@ -43,10 +43,10 @@ window.addEventListener("load", () => {
         `;
 
       dataItem.addEventListener("click", () => {
-        selectNewFeature(feature);
+        selectNewFeature(feature, schoolData, libraryData);
         map.flyTo({
           center: feature.geometry.coordinates,
-          zoom: 15,
+          zoom: 10,
         });
       });
       libraryDataContainer.appendChild(dataItem);
@@ -67,7 +67,8 @@ window.addEventListener("load", () => {
         `;
 
       dataItem.addEventListener("click", () => {
-        selectNewFeature(feature);
+        console.log(libraryData);
+        selectNewFeature(feature, schoolData, libraryData);
         map.flyTo({
           center: feature.geometry.coordinates,
           zoom: 15,
@@ -91,7 +92,7 @@ window.addEventListener("load", () => {
         },
         paint: {
           "circle-radius": DOT_SIZE,
-          "circle-color": "#8377d1",
+          "circle-color": "#94bfa7",
         },
       });
 
@@ -109,7 +110,7 @@ window.addEventListener("load", () => {
         },
         paint: {
           "circle-radius": DOT_SIZE,
-          "circle-color": "#94bfa7",
+          "circle-color": "#8377d1",
         },
       });
 
@@ -136,7 +137,7 @@ window.addEventListener("load", () => {
       const coordinates = e.features[0].geometry.coordinates.slice();
       const description = e.features[0].properties.Library;
 
-      selectNewFeature(e.features[0]);
+      selectNewFeature(e.features[0], schoolData, libraryData);
 
       while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
         coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
@@ -147,7 +148,7 @@ window.addEventListener("load", () => {
       const coordinates = e.features[0].geometry.coordinates.slice();
       const description = e.features[0].properties.SchoolName;
 
-      selectNewFeature(e.features[0]);
+      selectNewFeature(e.features[0], schoolData, libraryData);
 
       while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
         coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
@@ -155,7 +156,7 @@ window.addEventListener("load", () => {
     });
   };
 
-  const selectNewFeature = (feature) => {
+  const selectNewFeature = (feature, schoolData, libraryData) => {
     const featureType = feature.properties.Library ? "library" : "school";
     const selectedFeatureContainer = document.querySelector(
       ".selected-feature-container"
@@ -191,7 +192,10 @@ window.addEventListener("load", () => {
       steps: 100,
       units: "miles",
     };
-    let circle = turf.circle(feature.geometry.coordinates, 25, options);
+    let circle = turf.circle(feature.geometry.coordinates, 10, options);
+    //find how many features are within the turf circle
+    let libraryCount = turf.within(libraryData, circle);
+    let schoolCount = turf.within(schoolData, circle);
     //add the circle to the map
     map.addSource("circle", {
       type: "geojson",
