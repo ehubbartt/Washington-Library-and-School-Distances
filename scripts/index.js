@@ -141,11 +141,6 @@ window.addEventListener("load", () => {
       while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
         coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
       }
-
-      new mapboxgl.Popup()
-        .setLngLat(coordinates)
-        .setHTML(description)
-        .addTo(map);
     });
 
     map.on("click", layers[1], (e) => {
@@ -157,11 +152,6 @@ window.addEventListener("load", () => {
       while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
         coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
       }
-
-      new mapboxgl.Popup()
-        .setLngLat(coordinates)
-        .setHTML(description)
-        .addTo(map);
     });
   };
 
@@ -172,10 +162,12 @@ window.addEventListener("load", () => {
     );
     const featureItem = document.createElement("div");
     featureItem.classList.add("feature-item");
+
     const selectedFeatureTitle = document.querySelector(
       ".selected-feature-title"
     );
     selectedFeatureTitle.innerHTML = "Selected Feature";
+
     if (featureType === "library") {
       featureItem.innerHTML = `
         <div class="feature-item__title">${feature.properties.Library}</div>
@@ -187,6 +179,38 @@ window.addEventListener("load", () => {
         <div class="feature-item__address">${feature.properties.PhysicalAddress}</div>
         `;
     }
+
+    //remove previous source and layer
+    if (map.getSource("circle")) {
+      map.removeLayer("circle");
+      map.removeSource("circle");
+    }
+
+    //use turf to create a 50 mile circle
+    var options = {
+      steps: 100,
+      units: "miles",
+    };
+    let circle = turf.circle(feature.geometry.coordinates, 25, options);
+    //add the circle to the map
+    map.addSource("circle", {
+      type: "geojson",
+      data: circle,
+    });
+
+    map.addLayer({
+      id: "circle",
+      type: "fill",
+      source: "circle",
+      layout: {
+        visibility: "visible",
+      },
+      paint: {
+        "fill-color": "#2F2F2F",
+        "fill-opacity": 0.1,
+      },
+    });
+
     const selectedFeatureItems = document.querySelectorAll(".feature-item");
     for (const selectedFeatureItem of selectedFeatureItems) {
       selectedFeatureItem.remove();
