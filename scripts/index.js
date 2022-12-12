@@ -4,13 +4,13 @@ window.addEventListener("load", () => {
 
   const map = new mapboxgl.Map({
     container: "map", // container ID
-    style: "mapbox://styles/mapbox/light-v10", // style URL
+    style: "mapbox://styles/april429/clblex4r9001k14mae7y5oron", // style URL
     zoom: 6.5, // starting zoom
     center: [-120.7, 47.5], // starting center
   });
 
   const layers = ["library_data", "school_data", "county_data"];
-  const DOT_SIZE = 3.5;
+  const DOT_SIZE = 5;
 
   const geoJsonFetch = async () => {
     const libraryResponse = await fetch(
@@ -117,7 +117,7 @@ window.addEventListener("load", () => {
         steps: 100,
         units: "miles",
       };
-      let circle = turf.circle(feature.geometry.coordinates, 10, options);
+      let circle = turf.circle(feature.geometry.coordinates, 5, options);
       //find how many features are within the turf circle
       let libraryCount = turf.within(libraryData, circle);
       let schoolCount = turf.within(schoolData, circle);
@@ -194,7 +194,7 @@ window.addEventListener("load", () => {
         },
         paint: {
           "circle-radius": DOT_SIZE,
-          "circle-color": "#94bfa7",
+          "circle-color": "#445E93",
         },
       });
 
