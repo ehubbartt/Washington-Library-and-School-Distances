@@ -55,10 +55,20 @@ window.addEventListener("load", () => {
           dataAddress = feature.properties.PhysicalAddress;
         }
 
-        dataItem.innerHTML = `
+        const distance = feature.properties.distance?.toFixed(2);
+
+        if (distance) {
+          dataItem.innerHTML = `
+          <div class="data-item__title">${dataTitle}</div>
+          <div class="data-item__address">${dataAddress}</div>
+          <div class="data-item__distance">${distance} miles</div>
+          `;
+        } else {
+          dataItem.innerHTML = `
         <div class="data-item__title">${dataTitle}</div>
         <div class="data-item__address">${dataAddress}</div>
         `;
+        }
 
         dataItem.addEventListener("click", () => {
           selectNewFeature(feature);
@@ -111,6 +121,33 @@ window.addEventListener("load", () => {
       //find how many features are within the turf circle
       let libraryCount = turf.within(libraryData, circle);
       let schoolCount = turf.within(schoolData, circle);
+
+      //find out how far away each feature is from the selected feature
+      for (const library of libraryCount.features) {
+        library.properties.distance = turf.distance(
+          feature.geometry.coordinates,
+          library.geometry.coordinates,
+          options
+        );
+      }
+
+      for (const school of schoolCount.features) {
+        school.properties.distance = turf.distance(
+          feature.geometry.coordinates,
+          school.geometry.coordinates,
+          options
+        );
+      }
+
+      //filter library conut by distace
+      // libraryCount = libraryCount.features.filter(
+      //   (library) => library.properties.distance <= 10
+      // );
+
+      //filter school count by distance
+      // schoolCount = schoolCount.features.filter(
+      //   (school) => school.properties.distance <= 10
+      // );
 
       updateDataList(libraryCount, "library");
       updateDataList(schoolCount, "school");
