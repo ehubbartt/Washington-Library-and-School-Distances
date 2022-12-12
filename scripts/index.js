@@ -32,6 +32,12 @@ window.addEventListener("load", () => {
       const id =
         type === "library" ? "library_data_container" : "school_data_container";
       const schoolDataContainer = document.getElementById(id);
+
+      //remove previous children of the data container
+      while (schoolDataContainer.firstChild) {
+        schoolDataContainer.removeChild(schoolDataContainer.firstChild);
+      }
+
       const features = data.features;
       for (const feature of features) {
         let dataItem = document.createElement("div");
@@ -105,6 +111,10 @@ window.addEventListener("load", () => {
       //find how many features are within the turf circle
       let libraryCount = turf.within(libraryData, circle);
       let schoolCount = turf.within(schoolData, circle);
+
+      updateDataList(libraryCount, "library");
+      updateDataList(schoolCount, "school");
+
       //add the circle to the map
       map.addSource("circle", {
         type: "geojson",
@@ -133,26 +143,6 @@ window.addEventListener("load", () => {
 
     updateDataList(libraryData, "library");
     updateDataList(schoolData, "school");
-    // const libraryFeatures = libraryData.features;
-    // for (const feature of libraryFeatures) {
-    //   let dataItem = document.createElement("div");
-    //   dataItem.classList.add("data-item");
-    //   dataItem.classList.add("btn");
-
-    //   dataItem.innerHTML = `
-    //     <div class="data-item__title">${feature.properties.Library}</div>
-    //     <div class="data-item__address">${feature.properties.LDLI_Address1}</div>
-    //     `;
-
-    //   dataItem.addEventListener("click", () => {
-    //     selectNewFeature(feature);
-    //     map.flyTo({
-    //       center: feature.geometry.coordinates,
-    //       zoom: 10,
-    //     });
-    //   });
-    //   libraryDataContainer.appendChild(dataItem);
-    // }
 
     map.on("load", () => {
       map.addSource(layers[0], {
