@@ -14,17 +14,17 @@ window.addEventListener("load", () => {
 
   const geoJsonFetch = async () => {
     const libraryResponse = await fetch(
-      "https://ehubbartt.github.io/Final-Project/assets/data/Cleaned_Washington_Library_Locations.geojson"
+      "https://ehubbartt.github.io/Washington-Library-and-School-Distances/assets/data/Cleaned_Washington_Library_Locations.geojson"
     );
     const libraryData = await libraryResponse.json();
 
     const schoolResponse = await fetch(
-      "https://ehubbartt.github.io/Final-Project/assets/data/Cleaned_Washington_State_Public_Schools.geojson"
+      "https://ehubbartt.github.io/Washington-Library-and-School-Distances/assets/data/Cleaned_Washington_State_Public_Schools.geojson"
     );
     const schoolData = await schoolResponse.json();
 
     const countyResponse = await fetch(
-      "https://ehubbartt.github.io/Final-Project/assets/data/Washington_Counties_(no_water).geojson"
+      "https://ehubbartt.github.io/Washington-Library-and-School-Distances/assets/data/Washington_Counties_(no_water).geojson"
     );
     const countyData = await countyResponse.json();
 
