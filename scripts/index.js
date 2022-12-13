@@ -84,6 +84,24 @@ window.addEventListener("load", () => {
       }
     };
 
+    const deselectFeature = () => {
+      const selectedFeatureContainer = document.querySelector(
+        ".selected-feature-container"
+      );
+      selectedFeatureContainer.innerHTML = `<H3 class="selected-feature-title">Please Select a point on the map or from below for distance comparison</H3>`;
+      updateDataList(libraryData.features, "library");
+      updateDataList(schoolData.features, "school");
+      //remove all circles from turf
+      if (map.getSource("circle")) {
+        map.removeLayer("circle");
+        map.removeSource("circle");
+      }
+      map.flyTo({
+        center: [-120.7, 47.5],
+        zoom: 6.5,
+      });
+    };
+
     const selectNewFeature = (feature) => {
       const featureType = feature.properties.Library ? "library" : "school";
       const selectedFeatureContainer = document.querySelector(
@@ -91,6 +109,11 @@ window.addEventListener("load", () => {
       );
       const featureItem = document.createElement("div");
       featureItem.classList.add("feature-item");
+      featureItem.classList.add("btn");
+
+      featureItem.addEventListener("click", () => {
+        deselectFeature();
+      });
 
       const selectedFeatureTitle = document.querySelector(
         ".selected-feature-title"
@@ -150,6 +173,26 @@ window.addEventListener("load", () => {
         (a, b) => a.properties.distance - b.properties.distance
       );
 
+      const searchBar = document.querySelector(".search-bar");
+      searchBar.addEventListener("keyup", (e) => {
+        const searchValue = e.target.value;
+        const tempLibraryData = libraryCount.features.filter((feature) => {
+          const library = feature.properties.Library.toLowerCase();
+          return library.includes(searchValue.toLowerCase());
+        });
+        const tempSchoolData = schoolCount.features.filter((feature) => {
+          const school = feature.properties.SchoolName.toLowerCase();
+          return school.includes(searchValue.toLowerCase());
+        });
+        if (
+          document.querySelector(".selected-feature-title").innerHTML ===
+          "Selected Feature"
+        ) {
+          updateDataList(tempSchoolData, "school");
+          updateDataList(tempLibraryData, "library");
+        }
+      });
+
       updateDataList(libraryCount.features, "library");
       updateDataList(schoolCount.features, "school");
 
@@ -186,12 +229,17 @@ window.addEventListener("load", () => {
         const library = feature.properties.Library.toLowerCase();
         return library.includes(searchValue.toLowerCase());
       });
-      updateDataList(tempLibraryData, "library");
       const tempSchoolData = schoolData.features.filter((feature) => {
         const school = feature.properties.SchoolName.toLowerCase();
         return school.includes(searchValue.toLowerCase());
       });
-      updateDataList(tempSchoolData, "school");
+      if (
+        document.querySelector(".selected-feature-title").innerHTML !==
+        "Selected Feature"
+      ) {
+        updateDataList(tempSchoolData, "school");
+        updateDataList(tempLibraryData, "library");
+      }
     });
 
     updateDataList(libraryData.features, "library");

@@ -129,7 +129,8 @@ html {
   padding: 0.25rem;
 }
 
-.data-item:hover {
+.data-item:hover,
+.feature-item:hover {
   background-color: #eee;
 }
 
