@@ -15,15 +15,15 @@ https://ehubbartt.github.io/Washington-Library-and-School-Distances/
 
 ### *Screenshots:*
 Initial application screen - all layers turned on
-![](img/initial.png)
+![](assets/img/initial.png)
 
 Only Library feature is turned on
-![](img/library.png)
+![](assets/img/library.png)
 
 5 miles of bufferzone of the selected feature.
 In this case, we choose University of Wahsington's Engineering Library Building.
 It lists total 82 results of libraries within the zone.
-![](img/buffer.png)
+![](assets/img/buffer.png)
 
 ### *Main functions:*
 The main function of this application allows users to either click on the circles to see either which school or library is located in the area, or they can use the sidebar to click through the specific feature they want to get more information on. Once a feature is selected, it will show the number of resulting features as well as listing other features(schools and libraries) that is within its buffer zone.
