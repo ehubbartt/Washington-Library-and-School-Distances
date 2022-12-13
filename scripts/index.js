@@ -28,7 +28,7 @@ window.addEventListener("load", () => {
     );
     const countyData = await countyResponse.json();
 
-    const updateDataList = (data, type) => {
+    const updateDataList = (features, type) => {
       const id =
         type === "library" ? "library_data_container" : "school_data_container";
       const schoolDataContainer = document.getElementById(id);
@@ -38,7 +38,10 @@ window.addEventListener("load", () => {
         schoolDataContainer.removeChild(schoolDataContainer.firstChild);
       }
 
-      const features = data.features;
+      const numResults = document.createElement("span");
+      numResults.innerHTML = `${features.length} results`;
+      schoolDataContainer.appendChild(numResults);
+
       for (const feature of features) {
         let dataItem = document.createElement("div");
         dataItem.classList.add("data-item");
@@ -147,8 +150,8 @@ window.addEventListener("load", () => {
         (a, b) => a.properties.distance - b.properties.distance
       );
 
-      updateDataList(libraryCount, "library");
-      updateDataList(schoolCount, "school");
+      updateDataList(libraryCount.features, "library");
+      updateDataList(schoolCount.features, "school");
 
       //add the circle to the map
       map.addSource("circle", {
@@ -176,8 +179,23 @@ window.addEventListener("load", () => {
       selectedFeatureContainer.appendChild(featureItem);
     };
 
-    updateDataList(libraryData, "library");
-    updateDataList(schoolData, "school");
+    const searchBar = document.querySelector(".search-bar");
+    searchBar.addEventListener("keyup", (e) => {
+      const searchValue = e.target.value;
+      const tempLibraryData = libraryData.features.filter((feature) => {
+        const library = feature.properties.Library.toLowerCase();
+        return library.includes(searchValue.toLowerCase());
+      });
+      updateDataList(tempLibraryData, "library");
+      const tempSchoolData = schoolData.features.filter((feature) => {
+        const school = feature.properties.SchoolName.toLowerCase();
+        return school.includes(searchValue.toLowerCase());
+      });
+      updateDataList(tempSchoolData, "school");
+    });
+
+    updateDataList(libraryData.features, "library");
+    updateDataList(schoolData.features, "school");
 
     map.on("load", () => {
       map.addSource(layers[0], {
