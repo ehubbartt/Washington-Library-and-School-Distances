@@ -129,9 +129,12 @@ html {
   padding: 0.25rem;
 }
 
-.data-item:hover,
-.feature-item:hover {
+.data-item:hover {
   background-color: #eee;
+}
+
+.feature-item:hover {
+  background-color: rgba(249, 164, 164, 0.365);
 }
 
 .data-item__title,
