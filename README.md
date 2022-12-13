@@ -14,14 +14,16 @@ Being accessible to libraries is important for public schools since it connects 
 https://ehubbartt.github.io/Washington-Library-and-School-Distances/
 
 ### *Screenshots:*
-Initial application screen - all layers turned on
+Initial application screen - all layers turned on.
 ![](assets/img/initial.png)
 
-Only Library feature is turned on
+Only Library feature is turned on.
 ![](assets/img/library.png)
 
 5 miles of bufferzone of the selected feature.
+>
 In this case, we choose University of Wahsington's Engineering Library Building.
+>
 It lists a total of 82 results of the libraries within the zone.
 ![](assets/img/buffer.png)
 
