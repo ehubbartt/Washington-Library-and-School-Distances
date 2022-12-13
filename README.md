@@ -1,5 +1,5 @@
 # Public Schools and Libraries Finder in Washington State
-## Contributors: Ethan Hubbartt, April Lee
+Contributors: Ethan Hubbartt, April Lee
 
 ### *Project title:*
 Visualizing public schools and public libraries in Washington State
