@@ -1,8 +1,8 @@
-# Final-Project:
-## Schools and Libraries in Washington GIS Application
+# GIS Application : Public Schools and Libraries Finder in Washington State
+## Contributors: Ethan Hubbartt, April Lee
 
 ### *Project title:*
-Visualizing public schools and public libraries in Washington State by County level
+Visualizing public schools and public libraries in Washington State
 
 ### *Project description:*
 This web GIS application is designed to display a map that shows varioous locations of public schools and public libraries in Washington state using Mapbox GL JS. With county layer, users can sort by distance. There are total 2,552 schools and 643 libraries in Washington state and each icon represents either school or library. Each location will show the location name with county.
