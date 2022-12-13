@@ -111,6 +111,10 @@ window.addEventListener("load", () => {
       featureItem.classList.add("feature-item");
       featureItem.classList.add("btn");
 
+      const searchbar = document.querySelector(".search-bar");
+      console.log(searchbar);
+      searchbar.value = "";
+
       featureItem.addEventListener("click", () => {
         deselectFeature();
       });
